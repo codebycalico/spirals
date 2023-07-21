@@ -16,8 +16,18 @@ amplitude = new p5.Amplitude();
 // let radius;
 // let angle;
 
+
+function onSoundLoadSuccess(e){
+    console.log("load sound success",e);
+ }
+ function onSoundLoadError(e){
+    console.log("load sound error",e);
+ }
+ function onSoundLoadProgress(e){
+    console.log("load sound progress",e);
+ }
 function preload(){
-  sound = loadSound('assets/bottle.wav');
+  sound = loadSound('./assets/bottle.wav', onSoundLoadSuccess, onSoundLoadError, onSoundLoadProgress);
 }
 
 function setup(){
@@ -31,9 +41,9 @@ function setup(){
 function draw() {
   background(0);
 
-  // if (sound.isPlaying()){
-  //   level = amplitude.getLevel();
-  // }
+  if (sound.isPlaying()){
+    level = amplitude.getLevel();
+  }
 
   for (let i = 0; i < numberOfCircles; i++){
     if(circles[i].visible){
@@ -53,13 +63,13 @@ function keyPressed(){
     } 
   }
 
-  if (keyCode===80){
-    if (sound.isPlaying()){
-        sound.stop();
-    }else{
-        sound.play();
-    }
-  }
+//   if (keyCode===80){
+//     if (sound.isPlaying()){
+//         sound.stop();
+//     }else{
+//         sound.play();
+//     }
+//   }
 }
 
 class Circle {
@@ -67,15 +77,15 @@ class Circle {
     this.x=width/2;
     this.y=height/2;
 
-  // if (sound.isPlaying()){
-  //   level = amplitude.getLevel();
-  // }
+  if (sound.isPlaying()){
+    level = amplitude.getLevel();
+  }
 
-  //   if (sound.isPlaying()){
-  //     this.smallness=map(level, 0, 1, 0, 150);
-  //   }else{
-  //     this.smallness=random(50);
-  //   }
+    if (sound.isPlaying()){
+      this.smallness=map(level, 0, 1, 0, 150);
+    }else{
+      this.smallness=random(50);
+    }
 
     this.smallness=random(50);
     this.xSpeed=random(-5,5);
